@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Home = () => {
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:8086/api/users")
+    .then((res)=>{
+      if (!res.ok) throw new Error ("failed to fetch");
+    })
+    .then((users)=>{
+      setUsers(data);
+    })
+    .catch((err)=>{
+      console.log(err.message);
+    })
+  }, []);
+  
+  
   return (
     <>
   <div className="text-center mt-4">
@@ -11,6 +27,7 @@ const Home = () => {
     </div>
 </div>
     <div>Data Here </div>
+
     </>
   )
 }
