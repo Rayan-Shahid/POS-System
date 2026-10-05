@@ -7,15 +7,37 @@ const Home = () => {
     fetch("http://localhost:8086/api/users")
     .then((res)=>{
       if (!res.ok) throw new Error ("failed to fetch");
+     return res.json()
     })
-    .then((users)=>{
+    .then((data)=>{
       setUsers(data);
+      console.log(data)
+
     })
     .catch((err)=>{
       console.log(err.message);
     })
   }, []);
-  
+
+
+  function addingUser () {
+    fetch("http://localhost:8086/api/users",{
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        "email": 'garouU@hotmail.com',
+               "bio": 'gaUrou',
+              "country": 'viInland'
+      })
+    })
+    .then((res)=>{
+      if(!res.ok) throw new Error("failed to use second fetch");
+      return res.json();      
+    })
+    .then((data)=>{
+      return console.log(data);
+    })
+  }
   
   return (
     <>
@@ -26,7 +48,11 @@ const Home = () => {
       <h3>Users Details will Display here</h3>
     </div>
 </div>
-    <div>Data Here </div>
+    <div className='pl-2' >Data Here
+       {users.map((items, id) => 
+       <div className='font-bold text-red-500 mt-2 pl-4' name={items.country} key={items.id} > {items.country} </div>  
+    )} </div>
+    <button className='border-2 border-black' onClick={addingUser}> Add User </button>
 
     </>
   )
