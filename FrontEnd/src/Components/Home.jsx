@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
 const Home = () => {
+ 
+ 
   const [users, setUsers] = useState([])
+  const [bio, setbio] = useState([])
+  const [country, setcountry] = useState([])
+  const [email, setemail] = useState([])
+  console.log(email)
+
 
   useEffect(() => {
     fetch("http://localhost:8086/api/users")
@@ -20,24 +27,26 @@ const Home = () => {
   }, []);
 
 
-  function addingUser () {
-    fetch("http://localhost:8086/api/users",{
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        "email": 'garouU@hotmail.com',
-               "bio": 'gaUrou',
-              "country": 'viInland'
-      })
-    })
-    .then((res)=>{
-      if(!res.ok) throw new Error("failed to use second fetch");
-      return res.json();      
-    })
-    .then((data)=>{
-      return console.log(data);
-    })
-  }
+  // function addingUser () {
+  //   fetch("http://localhost:8086/api/users",{
+  //     method: "POST",
+  //     headers: {"Content-Type":"application/json"},
+  //     body: JSON.stringify({
+  //       "email": 'guy@hotmail.com',
+  //              "bio": 'strongest man alive',
+  //             "country": 'Village'
+  //     })
+  //   })
+  //   .then((res)=>{
+  //     if(!res.ok) throw new Error("failed to use second fetch");
+  //     return res.json();
+    
+    
+  //   })
+  //   .then((data)=>{
+  //     return console.log(data);
+  //   })
+  // }
   
   return (
     <>
@@ -50,8 +59,13 @@ const Home = () => {
 </div>
     <div className='pl-2' >Data Here
        {users.map((items, id) => 
-       <div className='font-bold text-red-500 mt-2 pl-4' name={items.country} key={items.id} > {items.country} </div>  
+       <div className='font-bold text-red-500 mt-2 pl-4' name={items.bio} key={items.id} > {items.bio} </div>  
     )} </div>
+    <div className="container">
+      Name : <input className='m-3' type="text" name="name" id="name" />
+      Email : <input className='m-3' type="text" name="email" id="email value={email} onChange={(event)=> setemail(event.target.value)}" />
+      Country : <input className='m-3' type="text" name="country" id="country" />
+    </div>
     <button className='border-2 border-black' onClick={addingUser}> Add User </button>
 
     </>
